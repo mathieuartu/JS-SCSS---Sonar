@@ -9,11 +9,12 @@
 		},
 		"applySonarEvents": function(){
 			for(var i=0; i < this.sonars.length; i++){
-				var curSonar = this.sonars[i],
-					sonarClass = "sonar",
-					expandClass = "sonar-expand";
 
-				curSonar.addEventListener("click", function(e){
+				this.sonars[i].addEventListener("click", function(e){
+
+					var curSonar = this,
+						sonarClass = "sonar",
+						expandClass = "sonar-expand";
 
 					var sonarExists = curSonar.querySelector("span");
 					if(sonarExists){
@@ -39,7 +40,7 @@
 					setTimeout(function(){
 						newSonar.classList.add(expandClass);
 					},10);
-					
+
 				});
 			}
 		},
