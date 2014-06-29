@@ -1,58 +1,61 @@
 (function(){
-	"use strict";
+	'use strict';
 
-	var Sonarify = function(){};
+    var Sonarify = function(){};
 
 	Sonarify.prototype = {
-		"getSonars": function(){
-			return this.sonars = document.querySelectorAll(".sonar-button");
+		'getSonars': function(){
+			this.sonars = document.querySelectorAll('.sonar-button');
 		},
-		"applySonarEvents": function(){
+		'applySonarEvents': function(){
+
+            //Event
+            function sonarClick(e){
+
+                var curSonar = this,
+                    sonarClass = 'sonar',
+                    expandClass = 'sonar-expand';
+
+                var sonarExists = curSonar.querySelector('span');
+                if(sonarExists){
+                    curSonar.removeChild(sonarExists);
+                }
+
+                var eX = e.pageX,
+                    eY = e.pageY,
+                    eTop = curSonar.offsetTop,
+                    eLeft = curSonar.offsetLeft,
+                    sonarEl = document.createElement('span');
+
+                sonarEl.classList.add(sonarClass);
+                sonarEl.style.top = eY - eTop - 10 +'px';
+                sonarEl.style.left = eX - eLeft - 10 +'px';
+
+                curSonar.appendChild(sonarEl);
+
+                var newSonar = curSonar.querySelector('span');
+                this.expand(newSonar, expandClass);
+
+            }
+
+            //Apply event
 			for(var i=0; i < this.sonars.length; i++){
-
-				this.sonars[i].addEventListener("click", function(e){
-
-					var curSonar = this,
-						sonarClass = "sonar",
-						expandClass = "sonar-expand";
-
-					var sonarExists = curSonar.querySelector("span");
-					if(sonarExists){
-						curSonar.removeChild(sonarExists);
-					}
-
-					var eX = e.pageX,
-						eY = e.pageY,
-						eTop = curSonar.offsetTop,
-						eLeft = curSonar.offsetLeft,
-						eWidth = curSonar.offsetWidth,
-						eHeight = curSonar.offsetHeight,
-						sonarEl = document.createElement("span"),
-						circleEl = document.createElement("span");
-
-					sonarEl.classList.add(sonarClass);
-					sonarEl.style.top = eY - eTop - 10 +"px";
-					sonarEl.style.left = eX - eLeft - 10 +"px";
-
-					curSonar.appendChild(sonarEl);
-
-					var newSonar = curSonar.querySelector("span");
-					setTimeout(function(){
-						newSonar.classList.add(expandClass);
-					},10);
-
-				});
+				this.sonars[i].addEventListener('click', sonarClick);
 			}
 		},
-		"init": function(){
-			console.log("Initiating Sonar...");
+        'expand' : function(newSonar, expandClass){
+            setTimeout(function(){
+                newSonar.classList.add(expandClass);
+            },10);
+        },
+		'init': function(){
+			console.log('Initiating Sonar...');
 			this.getSonars();
 			this.applySonarEvents();
 		}
-	}
+	};
 
-	var sonarify = new Sonarify;
+	var sonarify = new Sonarify();
 	sonarify.init();
-
 
 })();
