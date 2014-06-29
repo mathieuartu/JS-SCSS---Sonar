@@ -9,6 +9,8 @@
 		},
 		'applySonarEvents': function(){
 
+			var gThis = this;
+			
             //Event
             function sonarClick(e){
 
@@ -34,7 +36,7 @@
                 curSonar.appendChild(sonarEl);
 
                 var newSonar = curSonar.querySelector('span');
-                this.expand(newSonar, expandClass);
+                gThis.expand(newSonar, expandClass);
 
             }
 
@@ -44,6 +46,7 @@
 			}
 		},
         'expand' : function(newSonar, expandClass){
+			console.log(newSonar, expandClass);
             setTimeout(function(){
                 newSonar.classList.add(expandClass);
             },10);
